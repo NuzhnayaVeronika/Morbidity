@@ -39,5 +39,35 @@ namespace DAL.Tests
                     expectedDisease
                     ), Times.Once());
         }
+
+        [Fact]
+        public void Get_InputId_CalledFindMethodOfDBSetWithCorrectId()
+        {
+            // Arrange
+            DbContextOptions opt = new DbContextOptionsBuilder<PrognosisContext>()
+                .Options;
+            var mockContext = new Mock<PrognosisContext>(opt);
+            var mockDbSet = new Mock<DbSet<Disease>>();
+            mockContext
+                .Setup(context =>
+                    context.Set<Disease>(
+                        ))
+                .Returns(mockDbSet.Object);
+
+            Disease expectedDisease = new Disease() { ID = 1 };
+            mockDbSet.Setup(mock => mock.Find(expectedDisease.ID))
+                    .Returns(expectedDisease);
+            var repository = new TestDiseaseRepository(mockContext.Object);
+
+            //Act
+            var actualDisease = repository.Get(expectedDisease.ID);
+
+            // Assert
+            mockDbSet.Verify(
+                dbSet => dbSet.Find(
+                    expectedDisease.ID
+                    ), Times.Once());
+            Assert.Equal(expectedDisease, actualDisease);
+        }
     }
 }
