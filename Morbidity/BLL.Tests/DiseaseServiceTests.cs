@@ -27,5 +27,19 @@ namespace BLL.Tests
             //Assert
             Assert.Throws<ArgumentNullException>(() => new DiseaseService(nullUnitOfWork));
         }
+
+        [Fact]
+        public void GetDiseases_UserIsAnalyst_ThrowMethodAccessException()
+        {
+            // Arrange
+            User user = new Analyst("test", 1);
+            SecurityContext.SetUser(user);
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            IDiseaseService diseaseService = new DiseaseService(mockUnitOfWork.Object);
+
+            // Act
+            // Assert
+            Assert.Throws<MethodAccessException>(() => diseaseService.GetDiseases(0));
+        }
     }
 }
