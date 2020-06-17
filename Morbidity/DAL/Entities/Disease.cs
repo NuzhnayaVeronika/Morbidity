@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DAL.Entities
 {
-    class Disease
+    public class Disease
     {
         public int ID { get; set; }
         public string Name { get; set; }

@@ -5,7 +5,7 @@ using DAL.Entities;
 
 namespace DAL.Repositories.Interfaces
 {
-    internal interface IDiseaseRepository
+    public interface IDiseaseRepository
         : IRepository<Disease>
     {
     }

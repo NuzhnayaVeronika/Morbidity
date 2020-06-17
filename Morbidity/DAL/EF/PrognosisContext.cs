@@ -10,7 +10,7 @@ namespace DAL.EF
         : DbContext
     {
         public DbSet<Prognosis> Prognos { get; set; }
-        internal DbSet<Disease> Diseases { get; set; }
+        public DbSet<Disease> Diseases { get; set; }
 
         public PrognosisContext(DbContextOptions options)
             : base(options)

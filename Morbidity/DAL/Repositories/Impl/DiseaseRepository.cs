@@ -9,7 +9,7 @@ using DAL.EF;
 
 namespace DAL.Repositories.Impl
 {
-    internal class DiseaseRepository
+    public class DiseaseRepository
         : BaseRepository<Disease>, IDiseaseRepository
     {
         internal DiseaseRepository(PrognosisContext context) 
