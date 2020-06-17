@@ -14,5 +14,30 @@ namespace DAL.Tests
 {
     public class BaseRepositoryUnitTests
     {
+        [Fact]
+        public void Create_InputDiseaseInstance_CalledAddMethodOfDBSetWithDiseaseInstance()
+        {
+            //Arrange
+            DbContextOptions opt = new DbContextOptionsBuilder<PrognosisContext>()
+                .Options;
+            var mockContext = new Mock<PrognosisContext>(opt);
+            var mockDbSet = new Mock<DbSet<Disease>>();
+            mockContext
+                .Setup(context => 
+                    context.Set<Disease>(
+                        ))
+                .Returns(mockDbSet.Object);
+            var repository = new TestDiseaseRepository(mockContext.Object);
+            Disease expectedDisease = new Mock<Disease>().Object;
+
+            //Act
+            repository.Create(expectedDisease);
+
+            //Assert
+            mockDbSet.Verify(
+                dbSet => dbSet.Add(
+                    expectedDisease
+                    ), Times.Once());
+        }
     }
 }

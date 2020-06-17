@@ -9,6 +9,6 @@ namespace DAL.Entities
         public int PrognosisID { get; set; }
         public DateTime Date { get; set; }
         public int DiseaseID { get; set; }
-        public char Expected { get; set; }
+        public char ExpectedResult { get; set; }
     }
 }
