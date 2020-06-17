@@ -28,6 +28,7 @@ namespace DAL.Tests
                         ))
                 .Returns(mockDbSet.Object);
             var repository = new TestDiseaseRepository(mockContext.Object);
+
             Disease expectedDisease = new Mock<Disease>().Object;
 
             //Act
@@ -68,6 +69,38 @@ namespace DAL.Tests
                     expectedDisease.ID
                     ), Times.Once());
             Assert.Equal(expectedDisease, actualDisease);
+        }
+
+        [Fact]
+        public void Delete_InputId_CalledFindAndRemoveMethodsOfDBSetWithCorrectArg()
+        {
+            // Arrange
+            DbContextOptions opt = new DbContextOptionsBuilder<PrognosisContext>()
+                .Options;
+            var mockContext = new Mock<PrognosisContext>(opt);
+            var mockDbSet = new Mock<DbSet<Disease>>();
+            mockContext
+                .Setup(context =>
+                    context.Set<Disease>(
+                        ))
+                .Returns(mockDbSet.Object);
+
+            Disease expectedDisease = new Disease() { ID = 1};
+            mockDbSet.Setup(mock => mock.Find(expectedDisease.ID)).Returns(expectedDisease);
+            var repository = new TestDiseaseRepository(mockContext.Object);
+
+            //Act
+            repository.Delete(expectedDisease.ID);
+
+            // Assert
+            mockDbSet.Verify(
+                dbSet => dbSet.Find(
+                    expectedDisease.ID
+                    ), Times.Once());
+            mockDbSet.Verify(
+                dbSet => dbSet.Remove(
+                    expectedDisease
+                    ), Times.Once());
         }
     }
 }
