@@ -12,7 +12,8 @@ namespace CCL.Security
         public static User GetUser()
         {
             return _user;
-        }        public static void SetUser(User user)
+        }
+        public static void SetUser(User user)
         {
             _user = user;
         }
